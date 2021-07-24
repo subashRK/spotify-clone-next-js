@@ -1,7 +1,7 @@
 import { serialize } from "cookie"
 
 const fetchData = (endpoint, body) => {
-  return fetch(`/api${endpoint}`, {
+  return fetch(`https://spotify-clone-srk.vercel.app/api${endpoint}`, {
     method: "POST",
     headers: {
       "Content-type": "application/json"
