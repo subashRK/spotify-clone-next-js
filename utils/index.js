@@ -1,7 +1,7 @@
 import { serialize } from "cookie"
 
 const fetchData = (endpoint, body) => {
-  return fetch(`http://localhost:3000/api${endpoint}`, {
+  return fetch(`/api${endpoint}`, {
     method: "POST",
     headers: {
       "Content-type": "application/json"

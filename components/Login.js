@@ -6,7 +6,7 @@ import { fetchData } from '../utils'
 
 const SCOPES = "ugc-image-upload%20user-read-email%20user-read-private%20user-read-recently-played%20user-top-read%20user-read-playback-position%20user-read-playback-state%20user-modify-playback-state%20user-read-currently-playing%20app-remote-control%20streaming%20playlist-modify-public%20playlist-modify-private%20playlist-read-private%20playlist-read-collaborative%20user-follow-modify%20user-follow-read%20user-library-modify%20user-library-read" // Added all the scopes as if needed in the future don't wanna search for specific scopes
 
-const LOGIN_URI = `https://accounts.spotify.com/authorize?response_type=code&client_id=97f857203f524062824f628755342118&redirect_uri=http://localhost:3000&scope=${SCOPES}`
+const LOGIN_URI = `https://accounts.spotify.com/authorize?response_type=code&client_id=97f857203f524062824f628755342118&redirect_uri=https://spotify-clone-srk.vercel.app&scope=${SCOPES}`
 
 const Login = ({ setToken }) => {
   const [loading, setLoading] = useState(false)
