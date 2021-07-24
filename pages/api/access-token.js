@@ -7,7 +7,7 @@ const handler = async (req, res) => {
   const spotifyApi = new SpotifyWebApi({
     clientId: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_SECRET_KEY,
-    redirectUri: "http://localhost:3000"
+    redirectUri: "https://spotify-clone-srk.vercel.app"
   })
 
   try {
