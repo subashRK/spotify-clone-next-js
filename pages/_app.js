@@ -31,12 +31,19 @@ function MyApp({ Component, pageProps, token: tokenProp }) {
   }, [])
 
   useEffect(() => {
-    if (!token) return
+    if (token?.expiresIn > (3600 * 1000)) {
+      let parsedDate = JSON.parse(token.expiresIn)
+      const newExpiresIn = parsedDate -= Date.now()
 
-    const convertExpiresInTime = token => {
-      token.expiresIn -= Date.now()
-      return token
+      setToken(oldToken => {
+        oldToken.expiresIn = newExpiresIn
+        return oldToken
+      })
     }
+  }, [token?.expiresIn])
+
+  useEffect(() => {
+    if (!token) return
 
     if (!token.accessToken || !token.expiresIn) {
       setLoading(true)
@@ -44,7 +51,7 @@ function MyApp({ Component, pageProps, token: tokenProp }) {
       fetchData("/refresh-token", { refreshToken: token.refreshToken })
       .then(res => res.json())
       .then(data => {
-        setToken(oldToken => ({ refreshToken: oldToken.refreshToken, ...convertExpiresInTime(data) }))
+        setToken(oldToken => ({ refreshToken: oldToken.refreshToken, ...data }))
         setLoading(false)
         router.replace("/")
       })
@@ -56,15 +63,11 @@ function MyApp({ Component, pageProps, token: tokenProp }) {
       return
     }
 
-    if (token?.expiresIn > 3600) {
-      setToken(oldToken => convertExpiresInTime(oldToken))
-    }
-
     const timeout = setTimeout(() => {
       fetchData("/refresh-token", { refreshToken: token.refreshToken })
       .then(res => res.json())
       .then(data => {
-        setToken(oldToken => ({ refreshToken: oldToken.refreshToken, ...convertExpiresInTime(data) }))
+        setToken(oldToken => ({ refreshToken: oldToken.refreshToken, ...data }))
       })
       .catch(() => {
         alert("Something went wrong!")
